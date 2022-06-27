@@ -19,6 +19,7 @@ $UHD_fileurl = $fileurl.Replace("1920x1080", "UHD")
 #echo $body.images
 
 # Determine filename for both HD & UHD images
+# I had to edit to resolve the file access denied problem.
 $filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("-", " ").TrimEnd(' ') + "_HD.jpg"
 $UHD_filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("-", " ").TrimEnd(' ') + "_UHD.jpg"
 # In the original code the lines were like
@@ -33,10 +34,10 @@ $curDir = Get-Location
 # Also, if the folder exist, check whether FHD and UHD.
 # folder exitst or not. if not, create 2 folders named FHD and UHD.
 $folderName = "Bing wallpaper"
-if (Test-Path $curDir\$folderName)
+if (Test-Path $curDir/$folderName)
 {
     # Write-Host "The folder already exist."
-    Set-Location $curDir\$folderName
+    Set-Location $curDir/$folderName
     # FHD
     if (Test-Path "FHD")
     {
@@ -60,7 +61,7 @@ else
 {
     New-Item $folderName -ItemType Directory
     # Write-Host "The folder is created."
-    Set-Location $curDir\$folderName
+    Set-Location $curDir/$folderName
     New-Item "FHD" -ItemType Directory
     New-Item "UHD" -ItemType Directory
 }
@@ -70,9 +71,32 @@ else
 #echo "Before the invoke request"
 
 #echo "After the invoke request"
-$filepath =  "$curDir\Bing wallpaper\FHD\" + $filename
-$UHD_filepath =  "$curDir\Bing wallpaper\UHD\" + $UHD_filename
+$filepath =  "$curDir/Bing wallpaper/FHD/" + $filename
+$UHD_filepath =  "$curDir/Bing wallpaper/UHD/" + $UHD_filename
 
 Invoke-WebRequest -Method Get -Uri $fileurl -OutFile  $filepath
 Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
+
+
+# Set the picture as desktop background image.
+# Only the given desktop environments will be supported.
+# The commands given below are taken from 
+# https://github.com/pgc062020/DailyDesktopWallpaperPlus/blob/master/setwallpaper.cpp
+
+# GNOME and Budgie (GNOME is tested but budgie is not tested.)
+gsettings set org.gnome.desktop.background picture-uri $filepath
+Write-Output "GNOME and Budgie desktop background picture set done."
+# Cinnamon (Not tested.)
+gsettings set org.cinnamon.desktop.background picture-uri $filepath
+Write-Output "Cinnamon desktop background picture set done."
+# MATE (Not tested.)
+gsettings set org.mate.background picture-filename $filepath
+Write-Output "MATE desktop background picture set done."
+# Deepin (Not tested.)
+gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
+Write-Output "Deepin desktop background picture set done."
+# Unity (Not tested.)
+gsettings set org.gnome.desktop.background picture-uri $filepath
+Write-Output "Unity desktop background picture set done."
+# KDE (Not tested.)
 
