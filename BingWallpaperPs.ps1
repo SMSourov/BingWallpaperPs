@@ -98,5 +98,17 @@ Write-Output "Deepin desktop background picture set done."
 # Unity (Not tested.)
 gsettings set org.gnome.desktop.background picture-uri $filepath
 Write-Output "Unity desktop background picture set done."
-# KDE (Not tested.)
 
+# KDE (Not tested.)
+dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
+var Desktops = desktops();
+print (Desktops);
+for (i=0;i<Desktops.length;i++) {
+    d = Desktops[i];\n
+    d.wallpaperPlugin = \"org.kde.image\";
+    d.currentConfigGroup = Array(\"Wallpaper\",
+                                \"org.kde.image\",
+                                \"General\");
+    d.writeConfig("Image", "$filepath");
+}';
+Write-Output "Plasma 5 desktop background picture set done."
