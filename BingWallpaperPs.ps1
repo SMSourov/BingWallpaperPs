@@ -83,32 +83,16 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # The commands given below are taken from 
 # https://github.com/pgc062020/DailyDesktopWallpaperPlus/blob/master/setwallpaper.cpp
 
-# GNOME and Budgie (GNOME is tested but budgie is not tested.)
+# Every OS/DE I've tested were the latest at the time of testing.
+# GNOME and Budgie (GNOME is tested on Ubuntu but budgie is not tested.)
 gsettings set org.gnome.desktop.background picture-uri $filepath
-Write-Output "GNOME and Budgie desktop background picture set done."
 # Cinnamon (Not tested.)
 gsettings set org.cinnamon.desktop.background picture-uri $filepath
-Write-Output "Cinnamon desktop background picture set done."
 # MATE (Not tested.)
 gsettings set org.mate.background picture-filename $filepath
-Write-Output "MATE desktop background picture set done."
 # Deepin (Not tested.)
 gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
-Write-Output "Deepin desktop background picture set done."
 # Unity (Not tested.)
 gsettings set org.gnome.desktop.background picture-uri $filepath
-Write-Output "Unity desktop background picture set done."
-
-# KDE (Not tested.)
-dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
-var Desktops = desktops();
-print (Desktops);
-for (i=0;i<Desktops.length;i++) {
-    d = Desktops[i];\n
-    d.wallpaperPlugin = \"org.kde.image\";
-    d.currentConfigGroup = Array(\"Wallpaper\",
-                                \"org.kde.image\",
-                                \"General\");
-    d.writeConfig("Image", "$filepath");
-}';
-Write-Output "Plasma 5 desktop background picture set done."
+# KDE (Tested on Manjaro.)
+plasma-apply-wallpaperimage $filepath
