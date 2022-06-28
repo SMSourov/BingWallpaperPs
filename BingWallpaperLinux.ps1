@@ -86,13 +86,13 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # Every OS/DE I've tested were the latest at the time of testing.
 # GNOME and Budgie (GNOME is tested on Ubuntu but budgie is not tested.)
 gsettings set org.gnome.desktop.background picture-uri $filepath
-# Cinnamon (Not tested.)
-gsettings set org.cinnamon.desktop.background picture-uri $filepath
+# Cinnamon (Not working.)
+# gsettings set org.cinnamon.desktop.background picture-uri $filepath
 # MATE (Not tested.)
-gsettings set org.mate.background picture-filename $filepath
-# Deepin (Not tested.)
-gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
+# gsettings set org.mate.background picture-filename $filepath
+# Deepin (Not working.)
+# gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
 # Unity (Not tested.)
-gsettings set org.gnome.desktop.background picture-uri $filepath
-# KDE (Tested on Manjaro.)
+# gsettings set org.gnome.desktop.background picture-uri $filepath
+# KDE (Tested on Manjaro and Kubuntu.)
 plasma-apply-wallpaperimage $filepath
