@@ -1,4 +1,4 @@
-# BingWallpaperPs
+# BingWallpaperLinux
 Download Bing wallpaper via powershell.
 
 As this is a Powershell file, Powershell has to be installed to do this.
