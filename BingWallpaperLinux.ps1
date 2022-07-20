@@ -95,4 +95,4 @@ gsettings set org.gnome.desktop.background picture-uri $filepath
 # Unity (Not tested.)
 # gsettings set org.gnome.desktop.background picture-uri $filepath
 # KDE (Tested on Manjaro and Kubuntu.)
-plasma-apply-wallpaperimage $filepath
+# plasma-apply-wallpaperimage $filepath
