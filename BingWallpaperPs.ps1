@@ -160,17 +160,17 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # https://github.com/pgc062020/DailyDesktopWallpaperPlus/blob/master/setwallpaper.cpp
 
 # Every OS/DE I've tested were the latest at the time of testing.
-# GNOME and Budgie (GNOME is tested on Ubuntu but budgie is not tested.)
+# GNOME and Budgie (GNOME is tested on Ubuntu 22.04 but budgie is not tested.)
 gsettings set org.gnome.desktop.background picture-uri $filepath
-# Cinnamon (Not working.)
-# gsettings set org.cinnamon.desktop.background picture-uri $filepath
+# Cinnamon (Tested on Linux 20.3 Uma Cinnamon edition.)
+# gsettings set org.cinnamon.desktop.background picture-uri file://$filepath
 # MATE (Not tested.)
 # gsettings set org.mate.background picture-filename $filepath
 # Deepin (Not working.)
 # gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
 # Unity (Not tested.)
 # gsettings set org.gnome.desktop.background picture-uri $filepath
-# KDE (Tested on Manjaro and Kubuntu.)
+# KDE (Tested on Kubuntu20.04.)
 # plasma-apply-wallpaperimage $filepath
 
 # For Windows
