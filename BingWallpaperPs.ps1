@@ -161,7 +161,7 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 
 # Every OS/DE I've tested were the latest at the time of testing.
 # GNOME (Tested on Ubuntu 22.04.)
-gsettings set org.gnome.desktop.background picture-uri $filepath
+# gsettings set org.gnome.desktop.background picture-uri $filepath
 # Budgie (Tested on Ubuntu Budgie 22.04)
 # gsettings set org.gnome.desktop.background picture-uri file://$filepath
 # Cinnamon (Tested on Linux 20.3 Uma Cinnamon edition.)
@@ -178,4 +178,4 @@ gsettings set org.gnome.desktop.background picture-uri $filepath
 # For Windows
 # Use: Set-WallPaper -Image "C:\Wallpaper\Background.jpg" -Style Fit
 # Styles: Fill, Fit, Stretch, Tile, Center, Span
-# Set-WallPaper -Image "$filepath" -Style Fill
+Set-WallPaper -Image "$filepath" -Style Fill
