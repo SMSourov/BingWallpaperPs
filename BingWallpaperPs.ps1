@@ -166,7 +166,7 @@ gsettings set org.gnome.desktop.background picture-uri $filepath
 # gsettings set org.gnome.desktop.background picture-uri file://$filepath
 # Cinnamon (Tested on Linux 20.3 Uma Cinnamon edition.)
 # gsettings set org.cinnamon.desktop.background picture-uri file://$filepath
-# MATE (Not tested.)
+# MATE (Tested on Ubuntu MATE 22.04.)
 # gsettings set org.mate.background picture-filename $filepath
 # Deepin (Not working.)
 # gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
