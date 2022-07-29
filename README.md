@@ -1,9 +1,9 @@
 # BingWallpaperPs
 Download Bing wallpaper via powershell.
 
-As this is a Powershell file, Powershell has to be installed in order to run this script files.
+As this is a Powershell file, Powershell has to be installed in order to run this script file.
 
-This script file can be used in Windows and Linux and Windows. 
+This script file can be used in Windows and Linux. 
 
 By default, it is setup for GNOME in Linux. To make it usable for your PC, you have to comment and uncomment some lines by adding "# " at the start of the line.
 
