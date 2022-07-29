@@ -98,9 +98,6 @@ $UHD_fileurl = $fileurl.Replace("1920x1080", "UHD")
 # I had to edit to resolve the file access denied problem.
 $filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("-", " ").TrimEnd(' ') + "_HD.jpg"
 $UHD_filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("-", " ").TrimEnd(' ') + "_UHD.jpg"
-# In the original code the lines were like
-#$filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('-(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("-", " ").TrimEnd(' ') + "_HD.jpg"
-#$UHD_filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('-(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("-", " ").TrimEnd(' ') + "_UHD.jpg"
 
 # Get the current directory
 $curDir = Get-Location
