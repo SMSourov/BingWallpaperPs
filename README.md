@@ -1,5 +1,6 @@
 # BingWallpaperPs
 Download Bing wallpaper via powershell.
+This is a forked project.
 
 As this is a Powershell file, Powershell has to be installed in order to run this script file.
 
