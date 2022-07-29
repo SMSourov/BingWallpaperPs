@@ -160,8 +160,10 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # https://github.com/pgc062020/DailyDesktopWallpaperPlus/blob/master/setwallpaper.cpp
 
 # Every OS/DE I've tested were the latest at the time of testing.
-# GNOME and Budgie (GNOME is tested on Ubuntu 22.04 but budgie is not tested.)
+# GNOME (Tested on Ubuntu 22.04.)
 gsettings set org.gnome.desktop.background picture-uri $filepath
+# Budgie (Tested on Ubuntu Budgie 22.04)
+# gsettings set org.gnome.desktop.background picture-uri file://$filepath
 # Cinnamon (Tested on Linux 20.3 Uma Cinnamon edition.)
 # gsettings set org.cinnamon.desktop.background picture-uri file://$filepath
 # MATE (Not tested.)
