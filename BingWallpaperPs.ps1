@@ -172,7 +172,7 @@ gsettings set org.gnome.desktop.background picture-uri $filepath
 # gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
 # Unity (Not tested.)
 # gsettings set org.gnome.desktop.background picture-uri $filepath
-# KDE (Tested on Kubuntu20.04.)
+# KDE (Tested on Kubuntu 20.04.)
 # plasma-apply-wallpaperimage $filepath
 
 # For Windows
