@@ -22,10 +22,10 @@ Start-Sleep -Seconds 60
 
 # Now, run the command.
 # The directory where the Bing wallpaper is located.
-cd /mnt/sda6/BingWallpaperLinux-main
+cd /mnt/sda6/BingWallpaperPs-0.0.4
 
 # Run the powershell file.
-powershell BingWallpaperLinux.ps1
+pwsh BingWallpaperPs.ps1
 # "libnotify" is a linux program. With the help of 
 # this program, a toast notification can be sent 
 # via "notify-send" command.
@@ -62,10 +62,10 @@ while (1) {
 
             # Now, run the command.
             # The directory where the Bing wallpaper is located.
-            cd /mnt/sda6/BingWallpaperLinux-main
+            cd /mnt/sda6/BingWallpaperPs-0.0.4
 
             # Run the powershell file.
-            powershell BingWallpaperLinux.ps1
+            pwsh BingWallpaperPs.ps1
             notify-send "Wallpaper refreshed."
 
             # Now, wait 11 hours 55 minutes.
