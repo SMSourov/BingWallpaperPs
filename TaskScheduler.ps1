@@ -17,7 +17,7 @@
 $HourConst = "06"
 $MinuteConst = "00"
 
-# At first, wait 60 seconds.
+# At first, wait 60 seconds. 
 Start-Sleep -Seconds 60
 
 # Now, run the command.
