@@ -4,7 +4,7 @@
 
 # Go to the location of the task scheduler 
 # file.
-cd /mnt/sda6/BingWallpaperLinux-main
+cd /mnt/sda6/BingWallpaperPs-0.0.4
 
 # Run the task scheduler file.
-powershell ./bingwallpaper.ps1
+pwsh ./TaskScheduler.ps1
