@@ -172,7 +172,9 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # KDE (Tested on Kubuntu 20.04.)
 # plasma-apply-wallpaperimage $filepath
 # LXQt
-pcmanfm-qt --set-wallpaper="$filepath"
+# pcmanfm-qt --set-wallpaper="$filepath"
+# LXDE
+# pcmanfm --set-wallpaper="$filepath"
 
 # For Windows
 # Use: Set-WallPaper -Image "C:\Wallpaper\Background.jpg" -Style Fit
