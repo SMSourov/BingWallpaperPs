@@ -171,6 +171,8 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # gsettings set org.gnome.desktop.background picture-uri $filepath
 # KDE (Tested on Kubuntu 20.04.)
 # plasma-apply-wallpaperimage $filepath
+# LXQt
+pcmanfm-qt --set-wallpaper="$filepath"
 
 # For Windows
 # Use: Set-WallPaper -Image "C:\Wallpaper\Background.jpg" -Style Fit
