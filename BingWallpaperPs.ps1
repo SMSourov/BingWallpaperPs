@@ -169,11 +169,11 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
 # Unity (Not tested.)
 # gsettings set org.gnome.desktop.background picture-uri $filepath
-# KDE (Tested on Kubuntu 20.04.)
+# KDE (Tested on Kubuntu 22.04.)
 # plasma-apply-wallpaperimage $filepath
-# LXQt
+# LXQt (Tested on Lubuntu 22.04.)
 # pcmanfm-qt --set-wallpaper="$filepath"
-# LXDE
+# LXDE (Tested on Fedora LXDE 36.)
 # pcmanfm --set-wallpaper="$filepath"
 
 # For Windows
