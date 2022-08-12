@@ -1,3 +1,6 @@
+# The following programming block is taken from
+# Joe Espitia
+# https://www.joseespitia.com/2017/09/15/set-wallpaper-powershell-function/
 Function Set-WallPaper {
  
     <#
@@ -73,6 +76,58 @@ Function Set-WallPaper {
       
     $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
 }
+
+
+# Check whether the user has internet 
+# connection or not.
+
+
+# Give a URL which would stay online 
+# everytime. For this case, I'll 
+# use Bing website as I'll download 
+# Bing wallpaper of the day. 
+$URL = "www.bing.com"
+
+
+# Trap the process inside a infinity 
+# loop. For this case, I'll use 
+# while loop.
+while (1) {
+
+
+    # If the user has internet connection and 
+    # the website is online thent the next 
+    # line would return "True", if not then 
+    # it would return "False".
+    $hasInternetConnection = Test-Connection -TargetName $URL -Ping -Count 1 -Quiet
+
+
+    # If it returns "True" then tell the user 
+    # something and proceed to the next tasks 
+    if ($hasInternetConnection -eq "True") {
+        Write-Output "Your internet connection is OK."
+        Write-output "Proceeding to the next steps."
+
+        
+        # Break the loop.
+        break
+    }
+
+
+    # If it returns "False" then tell the user 
+    # something and go the next loop after a 
+    # certain amount of time. For this case, 
+    # I'll go the next loop after 1 minute. 
+    else {
+        Write-Output "Check your internet connection"
+
+
+        # Enter the wait time in seconds. I'll give 
+        # 60 as 60 seconds mean 1 minute.
+        Start-Sleep -Seconds 60
+    }
+}
+
 
 # BING API
 # ($uri is created)
@@ -166,7 +221,7 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # MATE (Tested on Ubuntu MATE 22.04.)
 # gsettings set org.mate.background picture-filename $filepath
 # Deepin (Not working.)
-# gsettings set com.deepin.wrap.gnome.desktop.background picture-uri $filepath
+# gsettings set com.deepin.wrap.gnome.desktop.background picture-uri file://$filepath
 # Unity (Not tested.)
 # gsettings set org.gnome.desktop.background picture-uri $filepath
 # KDE (Tested on Kubuntu 22.04.)
