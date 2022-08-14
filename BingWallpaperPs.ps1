@@ -89,7 +89,7 @@ Function Set-WallPaper {
 $URL = "www.bing.com"
 
 
-# Trap the process inside a infinity 
+# Trap the process inside an infinity 
 # loop. For this case, I'll use 
 # while loop.
 while (1) {
