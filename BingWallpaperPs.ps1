@@ -220,7 +220,7 @@ Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 # gsettings set org.cinnamon.desktop.background picture-uri file://$filepath
 # MATE (Tested on Ubuntu MATE 22.04.)
 # gsettings set org.mate.background picture-filename $filepath
-# Deepin (Not working.)
+# Deepin (Tested on Deepin 20.7.1)
 # gsettings set com.deepin.wrap.gnome.desktop.background picture-uri file://$filepath
 # Unity (Not tested.)
 # gsettings set org.gnome.desktop.background picture-uri $filepath
