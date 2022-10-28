@@ -9,7 +9,7 @@ By default, it is setup for Windows. To make it usable for your PC, you have to 
 
 On Windows and on Linux, the command would be "powershell -ExecutionPolicy Bypass -File BingWallpaperPs.ps1".
 
-On Linux, it has support for GNOME, KDE, Cinnamon, Budgie and MATE. I've plans for adding support for XFCE, Deepin and Unity.
+On Linux, it has support for GNOME, KDE, Cinnamon, Budgie, Deepin and MATE. I've plans for adding support for XFCE and Unity.
 
 This is a forked project. This was forked from [caressofsteel](https://github.com/caressofsteel/bingwallpaper). I've made my own changes to enhance the functionality of the program.
 
