@@ -7,7 +7,7 @@ This script file can be used in Windows and Linux. It won't have any problem and
 
 By default, it is setup for Windows. To make it usable for your PC, you have to comment and uncomment some lines by adding "# " at the start of the line.
 
-On Windows and on Linux, the command would be "powershell -ExecutionPolicy Bypass -File BingWallpaperPs.ps1".
+On Windows and on Linux, the command would be "pwsh BingWallpaperPs.ps1".
 
 On Linux, it has support for GNOME, KDE, Cinnamon, Budgie, Deepin and MATE. I've plans for adding support for XFCE and Unity.
 
