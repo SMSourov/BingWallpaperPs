@@ -1,6 +1,9 @@
 # The following programming block is taken from
-# Joe Espitia
+# Joe Espitia.
 # https://www.joseespitia.com/2017/09/15/set-wallpaper-powershell-function/
+
+
+# The next function is used for Windows OS.
 Function Set-WallPaper {
  
     <#
@@ -96,7 +99,7 @@ while (1) {
 
 
     # If the user has internet connection and 
-    # the website is online thent the next 
+    # the website is online then the next 
     # line would return "True", if not then 
     # it would return "False".
     $hasInternetConnection = Test-Connection -TargetName $URL -Ping -Count 1 -Quiet
@@ -147,10 +150,10 @@ $fileurl = "https://www.bing.com/" + $body.images[0].url
 # from the $fileurl
 # ($UHD_fileurl is created)
 $UHD_fileurl = $fileurl.Replace("1920x1080", "UHD")
-#echo $body.images
+# echo $body.images
 
 # Determine filename for both HD & UHD images
-# I had to edit to resolve the file access denied problem.
+# I had to edit to resolve the file access denied problem in the Linux OS.
 $filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("/", ", ").Replace("-", " ").TrimEnd(' ') + "_HD.jpg"
 $UHD_filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("/", ", ").Replace("-", " ").TrimEnd(' ') + "_UHD.jpg"
 
@@ -162,76 +165,166 @@ $curDir = Get-Location
 # Also, if the folder exist, check whether FHD and UHD.
 # folder exitst or not. if not, create 2 folders named FHD and UHD.
 $folderName = "Bing wallpaper"
-if (Test-Path $curDir/$folderName)
-{
+if (Test-Path $curDir/$folderName) {
     # Write-Host "The folder already exist."
     Set-Location $curDir/$folderName
     # FHD
-    if (Test-Path "FHD")
-    {
+    if (Test-Path "FHD") {
         Write-Host "The FHD folder already exist."
     }
-    else
-    {
+    else {
         New-Item "FHD" -ItemType Directory
     }
     # UHD
-    if (Test-Path "FHD")
-    {
+    if (Test-Path "FHD") {
         Write-Host "The UHD folder already exist."
     }
-    else
-    {
+    else {
         New-Item "UHD" -ItemType Directory
     }
 }
-else
-{
+else {
     New-Item $folderName -ItemType Directory
     # Write-Host "The folder is created."
     Set-Location $curDir/$folderName
     New-Item "FHD" -ItemType Directory
     New-Item "UHD" -ItemType Directory
 }
-#Set-Location $curDir
-#Set-Location ".\Bing wallpaper\FHD\"
-#echo $PWD
-#echo "Before the invoke request"
+# Set-Location $curDir
+# Set-Location ".\Bing wallpaper\FHD\"
+# echo $PWD
+# echo "Before the invoke request"
 
-#echo "After the invoke request"
-$filepath =  "$curDir/Bing wallpaper/FHD/" + $filename
-$UHD_filepath =  "$curDir/Bing wallpaper/UHD/" + $UHD_filename
+# echo "After the invoke request"
+$filepath = "$curDir/Bing wallpaper/FHD/" + $filename
+$UHD_filepath = "$curDir/Bing wallpaper/UHD/" + $UHD_filename
 
 Invoke-WebRequest -Method Get -Uri $fileurl -OutFile  $filepath
 Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
 
 
 # Set the picture as desktop background image.
-# Only the given desktop environments will be supported.
-# The commands given below are taken from 
-# https://github.com/pgc062020/DailyDesktopWallpaperPlus/blob/master/setwallpaper.cpp
+if ($IsLinux) {
+    # Only the given desktop environments will be supported.
+    # The commands given below are taken from 
+    # https://github.com/pgc062020/DailyDesktopWallpaperPlus/blob/master/setwallpaper.cpp
 
-# Every OS/DE I've tested were the latest at the time of testing.
-# GNOME (Tested on Ubuntu 22.04.)
-# gsettings set org.gnome.desktop.background picture-uri $filepath
-# Budgie (Tested on Ubuntu Budgie 22.04)
-# gsettings set org.gnome.desktop.background picture-uri file://$filepath
-# Cinnamon (Tested on Linux 20.3 Uma Cinnamon edition.)
-# gsettings set org.cinnamon.desktop.background picture-uri file://$filepath
-# MATE (Tested on Ubuntu MATE 22.04.)
-# gsettings set org.mate.background picture-filename $filepath
-# Deepin (Tested on Deepin 20.7.1)
-# gsettings set com.deepin.wrap.gnome.desktop.background picture-uri file://$filepath
-# Unity (Not tested.)
-# gsettings set org.gnome.desktop.background picture-uri $filepath
-# KDE (Tested on Kubuntu 22.04.)
-# plasma-apply-wallpaperimage $filepath
-# LXQt (Tested on Lubuntu 22.04.)
-# pcmanfm-qt --set-wallpaper="$filepath"
-# LXDE (Tested on Fedora LXDE 36.)
-# pcmanfm --set-wallpaper="$filepath"
+    # Detect the desktop environment that the 
+    # user have in it's OS.
 
-# For Windows
-# Use: Set-WallPaper -Image "C:\Wallpaper\Background.jpg" -Style Fit
-# Styles: Fill, Fit, Stretch, Tile, Center, Span
-Set-WallPaper -Image "$filepath" -Style Fill
+    # Make a function to get the minimal output
+    # of neofetch.
+    function neofetchMinimal {
+        neofetch --disable memory gpu cpu wm theme shell resolution icons packages uptime kernel --os_arch off --de_version off --stdout
+        # In this command, Memory, GPU, CPU, WM,
+        # Theme, Shell, Resolution, Icons, Packages, 
+        # Uptime, Kernel, OS architecture, Desktop 
+        # Environment version, Distro icon, Text 
+        # color and bold text will not be shown. 
+        # Only username, hostname, the seperator line 
+        # OS, Host, DE, Terminal will be shown.
+    }
+
+    # Every OS/DE I've tested were the latest at the time of testing.
+
+    # Get the minimal output and get get minimal 
+    # output to an array variable
+    [array] $information = neofetchMinimal
+
+    # Copy the fifth value of the array to a 
+    # new variable. This line contains the 
+    # name of the desktop environment.
+    $desktop_environment_info = $information[4]
+
+    # Trim the first "DE: " and put the all 
+    # of the string in a new variable. It will 
+    # make thing easy. Firstly, you have to save 
+    # the value to a string type variable and 
+    # trim the first 4 characters.
+    $desktop_environment = $desktop_environment_info.ToString().Substring(4)
+
+    # Trim the whitespaces from the variable
+    $desktop_environment = $desktop_environment.Trim()
+
+    # Lower all of the character of the string.
+    # This will make the conditions easier to 
+    # implement.
+    $desktop_environment = $desktop_environment.ToLower()
+
+
+    if ($desktop_environment -eq "gnome") {
+        Write-Output "It has detected GNOME desktop environment."
+        # GNOME (Tested on Ubuntu 22.04.)
+        gsettings set org.gnome.desktop.background picture-uri $filepath
+        # Not sure why but at the time of testing this on, 
+        # Visual Studio Code flatpak, it kept detecting 
+        # the desktop environment as Unity Desktop 
+        # Environment. But when this was run from GNOME 
+        # Terminal(not flatpak or snap), it detected the 
+        # desktop environment as GNOME Desktop Environment.
+    }
+
+    if ($desktop_environment -eq "plasma") {
+        Write-Output "It has detected KDE Plasma desktop environment."
+        # KDE (Tested on Kubuntu 22.04.)
+        plasma-apply-wallpaperimage $filepath
+    }
+
+    if ($desktop_environment -eq "unity") {
+        Write-Output "It has detected Unity desktop environment."
+        # Unity (Tested on Ubuntu Unity 22.10.)
+        gsettings set org.gnome.desktop.background picture-uri file://$filepath
+    }
+    
+    if ($desktop_environment -eq "budgie") {
+        Write-Output "It has detected Budgie desktop environment"
+        # Budgie (Tested on Ubuntu Budgie 22.04)
+        gsettings set org.gnome.desktop.background picture-uri file://$filepath
+    }
+
+
+    if ($desktop_environment -eq "cinnamon") {
+        Write-Output "It has detected Cinnamon desktop environment."
+        # Cinnamon (Tested on Linux Mint 20.3 Uma Cinnamon edition.)
+        gsettings set org.cinnamon.desktop.background picture-uri file://$filepath
+    }
+
+    if ($desktop_environment -eq "mate") {
+        Write-Output "It has detected MATE desktop environment."
+        # MATE (Tested on Ubuntu MATE 22.04.)
+        gsettings set org.mate.background picture-filename $filepath
+    }
+
+    if ($desktop_environment -eq "deepin") {
+        Write-Output "It has detected Deepin desktop environment."
+        # Deepin (Tested on AcroLinux 22.11.02 Deepin 20.6 environment)
+        # I couldn't make it work in Deepin 20.8.
+        # Same goes for the previous releases.
+        gsettings set com.deepin.wrap.gnome.desktop.background picture-uri file://$filepath
+    }
+
+    if ($desktop_environment -eq "lxqt") {
+        Write-Output "It has detected LXQt desktop environment"
+        # LXQt (Tested on Lubuntu 22.04.)
+        pcmanfm-qt --set-wallpaper="$filepath"
+    }
+
+
+    if ($desktop_environment -eq "lxde") {
+        Write-Output "It has detected LXDE desktop environment."
+        # LXDE (Tested on Fedora LXDE 36.)
+        pcmanfm --set-wallpaper="$filepath"
+    }
+    
+}
+
+if ($IsWindows) {
+    # For Windows
+    # Use: Set-WallPaper -Image "C:\Wallpaper\Background.jpg" -Style Fit
+    # Styles: Fill, Fit, Stretch, Tile, Center, Span
+    Set-WallPaper -Image "$filepath" -Style Fill
+}
+
+# Get back to the working directory ffrom where the 
+# script was launched
+Set-Location -Path ..
