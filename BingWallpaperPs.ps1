@@ -323,6 +323,54 @@ if ($IsWindows) {
     # Use: Set-WallPaper -Image "C:\Wallpaper\Background.jpg" -Style Fit
     # Styles: Fill, Fit, Stretch, Tile, Center, Span
     Set-WallPaper -Image "$filepath" -Style Fill
+
+    # Create a new file. It will be used to send a notification
+    # in windows PC.
+    New-Item -ItemType File -Name notification.ps1
+
+    # The following block will write a powershell file 
+    # which will be run by the windows built in powershell.
+    # It will write this code,
+    # https://gist.github.com/dend/5ae8a70678e3a35d02ecd39c12f99110
+    # of this link. It will be used to send a toast notification 
+    # to let the user know that the desktop wallpaper has been 
+    # updated. I tried to find a easier solution but I couldn't 
+    # find any.
+
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "function Show-Notification {"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    [cmdletbinding()]"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    Param ("
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "        [string]"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "        `$ToastTitle,"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "        [string]"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "        [parameter(ValueFromPipeline)]"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "        `$ToastText"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    )"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > `$null"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$Template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02)"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$RawXml = [xml] `$Template.GetXml()"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    (`$RawXml.toast.visual.binding.text|where {`$_.id -eq `"1`"}).AppendChild(`$RawXml.CreateTextNode(`$ToastTitle)) > `$null"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    (`$RawXml.toast.visual.binding.text|where {`$_.id -eq `"2`"}).AppendChild(`$RawXml.CreateTextNode(`$ToastText)) > `$null"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$SerializedXml = New-Object Windows.Data.Xml.Dom.XmlDocument"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$SerializedXml.LoadXml(`$RawXml.OuterXml)"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$Toast = [Windows.UI.Notifications.ToastNotification]::new(`$SerializedXml)"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$Toast.Tag = `"PowerShell`""
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$Toast.Group = `"PowerShell`""
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$Toast.ExpirationTime = [DateTimeOffset]::Now.AddMinutes(1)"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$Notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier(`"PowerShell`")"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "    `$Notifier.Show(`$Toast);"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "}"
+    Add-Content -Path notification.ps1 -Encoding utf8 -Value "Show-Notification `"The desktop wallpaper has been updated.`""
+
+    # The default execution policy of windows built in 
+    # powershell will not allow it to run. That's why 
+    # the execution policy must be bypassed in order 
+    # to run the script.
+    powershell -ExecutionPolicy Bypass .\notification.ps1
+
+    # As the work is done, there is no need to keep
+    # the file. Delete the file.
+    Remove-Item notification.ps1
 }
 
 # Get back to the working directory ffrom where the 
