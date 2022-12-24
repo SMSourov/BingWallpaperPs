@@ -10,6 +10,8 @@ For example: If you install Powershell v7.x.y (deb/rpm), the command would be,
 
 `sudo setcap cap_net_raw=eip /opt/microsoft/powershell/7/pwsh`
 
+Do not use the snap version. I couldn't find any way to solve this problem.
+
 It is needed as my script checks whether the user has internet connection or not. 
 
 This script file can be used in Windows and Linux. It won't have any problem and the file name will be same at both OSs.
@@ -17,9 +19,11 @@ This script file can be used in Windows and Linux. It won't have any problem and
 Dependencies:
 - For Windows:
 	- Powershell v7 or later versions
+	- Powershell v5 (It is needed to send desktop notifications.)
 - For Linux OS
 	- Powershell v7 or later versions
 	- `neofetch` (It is needed to determine the desktop environment.)
+	- `libnotify` (it is needed to send desktop notifications.)
 
 On Windows and on Linux, the command would be 
 
@@ -35,6 +39,13 @@ For Linux OS, the following desktop environments are supported.
 - Deepin (Tested on AcroLinux 22.11.02 having Deepin 20.6 environment. I don't know why but it is not working in Deepin 20.8.)
 - LXDE (Tested on Fedora LXDE 36.)
 - LXQt (Tested on Lubuntu 22.04.)
+However, the notification system was not checked for all desktop environments. I'll check that in the future, probably in the first/second week of January 2023.
+
+The plans I've right now,
+- Check whether the image exist or not. If it exist, it is surely applied. After downling the picture, the powershell script applies it as the wallpaper immediately. So skip the downloading and applying process. (All OS)
+- Save the download link so that the user can download the file easily in the future. (All OS)
+- Add support for XFCE. I don't have any intention to add support for this desktop environment. But, as this is one of the most popular desktop environments, I've a plan on adding support for this environment.
+
 
 This is a forked project. This was forked from [caressofsteel](https://github.com/caressofsteel/bingwallpaper). I've made my own changes to enhance the functionality of the program.
 
