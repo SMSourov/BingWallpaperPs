@@ -6,7 +6,7 @@
 # I've to make my own task scheduler 
 # script that will trigger a task at 
 # a specific time and won't take too 
-# system resources.
+# much system resources.
 
 # The task is to run the program at 
 # 06:00 am, 06:00 pm and 60 seconds 
