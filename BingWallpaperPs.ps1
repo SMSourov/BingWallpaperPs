@@ -140,21 +140,22 @@ $uri = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-WW"
 $response = Invoke-WebRequest -Method Get -Uri $uri
 
 # Extrect the image metadata
-# ($body and $fileurl is created)
+# ($body and $FHD_fileurl is created)
 $body = ConvertFrom-Json -InputObject $response.Content
-$fileurl = "https://www.bing.com/" + $body.images[0].url
+$FHD_fileurl = "https://www.bing.com" + $body.images[0].url
 
 # Try to get the UHD version if available
 # This basically replaces "1920x1080" with UHD
-# from the $fileurl
+# from the $FHD_fileurl
 # ($UHD_fileurl is created)
-$UHD_fileurl = $fileurl.Replace("1920x1080", "UHD")
+$UHD_fileurl = $FHD_fileurl.Replace("1920x1080", "UHD")
 # echo $body.images
 
 # Determine filename for both HD & UHD images
 # I had to edit to resolve the file access denied problem in the Linux OS.
-$filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("/", ", ").Replace("-", " ").TrimEnd(' ') + "_HD.jpg"
+$FHD_filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("/", ", ").Replace("-", " ").TrimEnd(' ') + "_FHD.jpg"
 $UHD_filename = $body.images[0].startdate + " - " + $body.images[0].copyright.Split('(', 2)[-2].Replace(" ", "-").Replace("?", "").Replace("/", ", ").Replace("-", " ").TrimEnd(' ') + "_UHD.jpg"
+$LNK_filename = $body.images[0].startdate + "_LNK.txt"
 
 # Get the current directory
 $curDir = Get-Location
@@ -181,6 +182,13 @@ if (Test-Path $curDir/$folderName) {
     else {
         New-Item "UHD" -ItemType Directory
     }
+    # LINKSN
+    if (Test-Path "LINKS") {
+        Write-Host "The LNK folder already exist."
+    }
+    else {
+        New-Item "LNK" -ItemType Directory
+    }
 }
 else {
     New-Item $folderName -ItemType Directory
@@ -188,6 +196,7 @@ else {
     Set-Location $curDir/$folderName
     New-Item "FHD" -ItemType Directory
     New-Item "UHD" -ItemType Directory
+    New-Item "LNK" -ItemType Directory
 }
 # Set-Location $curDir
 # Set-Location ".\Bing wallpaper\FHD\"
@@ -195,8 +204,9 @@ else {
 # echo "Before the invoke request"
 
 # echo "After the invoke request"
-$filepath = "$curDir/Bing wallpaper/FHD/" + $filename
+$FHD_filepath = "$curDir/Bing wallpaper/FHD/" + $FHD_filename
 $UHD_filepath = "$curDir/Bing wallpaper/UHD/" + $UHD_filename
+$LNK_filepath = "$curDir/Bing wallpaper/LNK/" + $LNK_filename
 
 # Get back to the working directory from where the 
 # script was launched
@@ -205,17 +215,35 @@ Set-Location -Path ..
 # Check whether the user already have the wallpaper
 # or not. This can be verified by checking whether 
 # one of the wallpaper is present or not. In this case, 
-# I'll check whether the FHD file is present or not.  
-if (Test-Path $filepath) {
-    Write-Host "The FHD wallpaper exist. So, the wallpaper not be downloaded and applied."
+# I'll check whether the LNK file is present or not.  
+if (Test-Path $LNK_filepath) {
+    Write-Host "The LNK file exist. So, the wallpaper not be downloaded and applied."
 }
 
-# If the FHD file doesn't exist, the program will continue its process.
+# If the LNK file doesn't exist, the program will continue its process.
 else {
-    Invoke-WebRequest -Method Get -Uri $fileurl -OutFile  $filepath
+    # Downlaod the FHD file.
+    Invoke-WebRequest -Method Get -Uri "$FHD_fileurl" -OutFile "$FHD_filepath"
+    # Download the UHD file.
     Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
-    
-    
+    # Save the informations in the LNK file.
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Title of the image:"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].copyright
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "More information of the image:"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].copyrightlink
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Date of the image(YYYYMMDD):"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].startdate
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "The base URL of the image:"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].urlbase
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Download link of the FHD file:"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $FHD_fileurl
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Download link of the UHD file:"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $UHD_fileurl
     # Set the picture as desktop background image.
     if ($IsLinux) {
         # Only the given desktop environments will be supported.
@@ -268,7 +296,7 @@ else {
         if ($desktop_environment -eq "gnome") {
             Write-Output "It has detected GNOME desktop environment."
             # GNOME (Tested on Ubuntu 22.04.)
-            gsettings set org.gnome.desktop.background picture-uri $filepath
+            gsettings set org.gnome.desktop.background picture-uri $FHD_filepath
             # Not sure why but at the time of testing this on, 
             # Visual Studio Code flatpak, it kept detecting 
             # the desktop environment as Unity Desktop 
@@ -280,31 +308,31 @@ else {
         if ($desktop_environment -eq "plasma") {
             Write-Output "It has detected KDE Plasma desktop environment."
             # KDE (Tested on Kubuntu 22.04.)
-            plasma-apply-wallpaperimage $filepath
+            plasma-apply-wallpaperimage $FHD_filepath
         }
     
         if ($desktop_environment -eq "unity") {
             Write-Output "It has detected Unity desktop environment."
             # Unity (Tested on Ubuntu Unity 22.10.)
-            gsettings set org.gnome.desktop.background picture-uri file://$filepath
+            gsettings set org.gnome.desktop.background picture-uri file://$FHD_filepath
         }
     
         if ($desktop_environment -eq "budgie") {
             Write-Output "It has detected Budgie desktop environment"
             # Budgie (Tested on Ubuntu Budgie 22.04)
-            gsettings set org.gnome.desktop.background picture-uri file://$filepath
+            gsettings set org.gnome.desktop.background picture-uri file://$FHD_filepath
         }
     
         if ($desktop_environment -eq "cinnamon") {
             Write-Output "It has detected Cinnamon desktop environment."
             # Cinnamon (Tested on Linux Mint 20.3 Uma Cinnamon edition.)
-            gsettings set org.cinnamon.desktop.background picture-uri file://$filepath
+            gsettings set org.cinnamon.desktop.background picture-uri file://$FHD_filepath
         }
     
         if ($desktop_environment -eq "mate") {
             Write-Output "It has detected MATE desktop environment."
             # MATE (Tested on Ubuntu MATE 22.04.)
-            gsettings set org.mate.background picture-filename $filepath
+            gsettings set org.mate.background picture-filename $FHD_filepath
         }
     
         if ($desktop_environment -eq "deepin") {
@@ -312,19 +340,19 @@ else {
             # Deepin (Tested on AcroLinux 22.11.02 Deepin 20.6 environment)
             # I couldn't make it work in Deepin 20.8.
             # Same goes for the previous releases.
-            gsettings set com.deepin.wrap.gnome.desktop.background picture-uri file://$filepath
+            gsettings set com.deepin.wrap.gnome.desktop.background picture-uri file://$FHD_filepath
         }
     
         if ($desktop_environment -eq "lxqt") {
             Write-Output "It has detected LXQt desktop environment"
             # LXQt (Tested on Lubuntu 22.04.)
-            pcmanfm-qt --set-wallpaper="$filepath"
+            pcmanfm-qt --set-wallpaper="$FHD_filepath"
         }
     
         if ($desktop_environment -eq "lxde") {
             Write-Output "It has detected LXDE desktop environment."
             # LXDE (Tested on Fedora LXDE 36.)
-            pcmanfm --set-wallpaper="$filepath"
+            pcmanfm --set-wallpaper="$FHD_filepath"
         }
     }
     
@@ -332,7 +360,7 @@ else {
         # For Windows
         # Use: Set-WallPaper -Image "C:\Wallpaper\Background.jpg" -Style Fit
         # Styles: Fill, Fit, Stretch, Tile, Center, Span
-        Set-WallPaper -Image "$filepath" -Style Fill
+        Set-WallPaper -Image "$FHD_filepath" -Style Fill
     
         # Create a new file. It will be used to send a notification
         # in windows PC.
