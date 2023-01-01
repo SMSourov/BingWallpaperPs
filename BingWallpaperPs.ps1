@@ -183,7 +183,7 @@ if (Test-Path $curDir/$folderName) {
         New-Item "UHD" -ItemType Directory
     }
     # LINKSN
-    if (Test-Path "LINKS") {
+    if (Test-Path "LNK") {
         Write-Host "The LNK folder already exist."
     }
     else {
