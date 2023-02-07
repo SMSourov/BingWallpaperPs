@@ -77,6 +77,7 @@ Function Set-WallPaper {
     $fWinIni = $UpdateIniFile -bor $SendChangeEvent
 
     $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
+    Write-Output $ret # To remove the warning shown in the vs code for $ret
 }
 
 
@@ -214,18 +215,27 @@ Set-Location -Path ..
 
 # Check whether the user already have the wallpaper
 # or not. This can be verified by checking whether 
-# one of the wallpaper is present or not. In this case, 
-# I'll check whether the LNK file is present or not.  
-if (Test-Path $LNK_filepath) {
-    Write-Host "The LNK file exist. So, the wallpaper not be downloaded and applied."
+# the file or wallpaper is present or not.
+if (Test-Path $FHD_filepath) {
+    Write-Host "The FHD file exist. So, the FHD file will not be downloaded."
 }
-
-# If the LNK file doesn't exist, the program will continue its process.
 else {
     # Downlaod the FHD file.
     Invoke-WebRequest -Method Get -Uri "$FHD_fileurl" -OutFile "$FHD_filepath"
+}
+
+if (Test-Path $UHD_filepath) {
+    Write-Host "The UHD file exist. So, the UHD file will not be downloaded."
+}
+else {
     # Download the UHD file.
     Invoke-WebRequest -Method Get -Uri "$UHD_fileurl" -OutFile "$UHD_filepath"
+}
+
+if (Test-Path $LNK_filepath) {
+    Write-Host "The LNK file exist. So, the wallpaper not be downloaded and applied."
+}
+else {
     # Save the informations in the LNK file.
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Title of the image:"
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].copyright
@@ -244,6 +254,12 @@ else {
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Download link of the UHD file:"
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value $UHD_fileurl
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Powershell command to download the UHD file:"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Start-BitsTransfer -Source `"$FHD_fileurl`" -Destination `"$FHD_filename`""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Powershell command to download the UHD file:"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Start-BitsTransfer -Source `"$UHD_fileurl`" -Destination `"$UHD_filename`""
     # Set the picture as desktop background image.
     if ($IsLinux) {
         # Only the given desktop environments will be supported.
