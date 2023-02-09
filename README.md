@@ -23,7 +23,7 @@ Dependencies:
 - For Linux OS
 	- Powershell v7 or later versions
 	- `neofetch` (It is needed to determine the desktop environment.)
-	- `libnotify` (it is needed to send desktop notifications.)
+	- `libnotify` (it is needed to send desktop notifications.)(The package name may be different in the Linux distribution you are using.)
 
 On Windows and on Linux, the command would be 
 
