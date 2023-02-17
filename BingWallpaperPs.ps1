@@ -265,7 +265,7 @@ else {
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Download link of the UHD file:"
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value $UHD_fileurl
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Powershell command to download the UHD file:"
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Powershell command to download the FHD file:"
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Invoke-WebRequest -Method Get -Uri `"$FHD_fileurl`" -OutFile `"$FHD_filename`""
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Powershell command to download the UHD file:"
