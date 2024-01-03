@@ -124,4 +124,3 @@ if ($desktop_environment -eq "lxde") {
     # LXDE (Tested on Fedora LXDE 36.)
     pcmanfm --set-wallpaper="$FHD_filepath"
 }
-    
