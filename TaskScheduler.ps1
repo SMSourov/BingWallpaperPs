@@ -6,7 +6,7 @@
 # I've to make my own task scheduler 
 # script that will trigger a task at 
 # a specific time and won't take too 
-# much system resources.
+# system resources.
 
 # The task is to run the program at 
 # 06:00 am, 06:00 pm and 60 seconds 
@@ -17,12 +17,12 @@
 $HourConst = "06"
 $MinuteConst = "00"
 
-# At first, wait 60 seconds. 
+# At first, wait 60 seconds.
 Start-Sleep -Seconds 60
 
 # Now, run the command.
 # The directory where the Bing wallpaper is located.
-cd /mnt/sda6/BingWallpaperPs-0.0.4
+cd /mnt/sda2/Bing/
 
 # Run the powershell file.
 pwsh BingWallpaperPs.ps1
@@ -62,7 +62,7 @@ while (1) {
 
             # Now, run the command.
             # The directory where the Bing wallpaper is located.
-            cd /mnt/sda6/BingWallpaperPs-0.0.4
+            cd /mnt/sda6/BingWallpaperLinux-main
 
             # Run the powershell file.
             pwsh BingWallpaperPs.ps1
