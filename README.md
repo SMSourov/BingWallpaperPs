@@ -43,7 +43,8 @@ For Linux OS, the following desktop environments are supported.
 - Deepin (Tested on AcroLinux 22.11.02 having Deepin 20.6 environment. I don't know why but it is not working in Deepin 20.8.)
 - LXDE (Tested on Fedora LXDE 36.)
 - LXQt (Tested on Lubuntu 22.04.)
-  However, the notification system was not checked for all desktop environments. I'll check that in the future, probably in 2024.
+
+However, the notification system was not checked for all desktop environments. I'll check that in the future, probably in 2024.
 
 The plans I've right now,
 
