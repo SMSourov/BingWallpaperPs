@@ -26,7 +26,7 @@ Dependencies:
   - Powershell v7 or later versions
   - `neofetch` (It is needed to determine the desktop environment.)
   - `libnotify` (it is needed to send desktop notifications.)(The package name may be different in the Linux distribution you are using.)
-  - `python3` for the notification system
+
 
 On Windows and on Linux, the command would be
 
