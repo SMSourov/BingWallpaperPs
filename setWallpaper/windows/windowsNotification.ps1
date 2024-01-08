@@ -17,4 +17,4 @@ $image = New-BTImage -Source "$FHD_filepath" -Align Center -Crop None
 
 $column = New-BTColumn -Weight 1080
 
-New-BurntToastNotification -HeroImage $image -Text "BingWallpaperPs", $message -AppLogo .\Chromium_1-6.png -Button $button -Column $column
+New-BurntToastNotification -HeroImage $image -Text "BingWallpaperPs", $message -AppLogo .\BingWallpaperPs.png -Button $button -Column $column
