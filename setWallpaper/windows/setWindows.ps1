@@ -91,6 +91,7 @@ $FHD_filepath = $image_name
 $LNK = $args[1]
 $UHD = $args[2]
 $FHD = $args[3]
+$FHD_info_url = $args[4]
 
 # Incase of the null values, define default values
 if ($null -eq $FHD) {
@@ -131,7 +132,7 @@ if ($FHD -eq "T") {
 # TTT = TODAY'S BING WALLPAPER WAS SAVED AND THE WALLPAPER IS NOW UPDATED
 
 # Variable to print the message
-$Message = ""
+$message = ""
 
 # Using switch statements
 Switch ($LNK + $UHD + $FHD) {
@@ -139,22 +140,19 @@ Switch ($LNK + $UHD + $FHD) {
         # $Message = "Everything is already saved. Nothing to do."
         Write-Output "Everything is saved. Nothing to do"
     }
-    "FFT" { $Message = "The FHD picture was saved and the wallpaper is now updated." }
-    "FTF" { $Message = "The UHD picture was saved." }
-    "FTT" { $Message = "The pictures were saved and the wallpaper is now updated." }
-    "TFF" { $Message = "The LNK file was saved." }
-    "TFT" { $Message = "The LNK file and FHD picture was saved and wallpaper is now updated." }
-    "TTF" { $Message = "The LNK file and UHD picture was saved." }
-    "TTT" {
-        $Message = "The Bing wallpaper was saved and the wallpaper is now updated." 
-        # Known bug
-        # "Today's Bing wallpaper was saved and the wallpaer is now updated." statement
-        # causes error
-    }
+    "FFT" { $message = "The FHD picture was saved and the wallpaper is now updated." }
+    "FTF" { $message = "The UHD picture was saved." }
+    "FTT" { $message = "The pictures were saved and the wallpaper is now updated." }
+    "TFF" { $message = "The LNK file was saved." }
+    "TFT" { $message = "The LNK file and FHD picture was saved and wallpaper is now updated." }
+    "TTF" { $message = "The LNK file and UHD picture was saved." }
+    "TTT" { $message = "Today's Bing wallpaper was saved and the wallpaer is now updated." }
 }
 
 # The default execution policy of windows built in 
 # powershell will not allow it to run. That's why 
 # the execution policy must be bypassed in order 
 # to run the script.
-powershell -ExecutionPolicy Bypass .\notification.ps1 "$Message"
+# powershell -ExecutionPolicy Bypass .\notification.ps1 "$Message"
+
+pwsh .\windowsNotification.ps1 $FHD_filepath $message $FHD_info_url
