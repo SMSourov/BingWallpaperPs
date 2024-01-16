@@ -136,17 +136,14 @@ $message = ""
 
 # Using switch statements
 Switch ($LNK + $UHD + $FHD) {
-    "FFF" {
-        # $Message = "Everything is already saved. Nothing to do."
-        Write-Output "Everything is saved. Nothing to do"
-    }
+    "FFF" { $Message = "Everything is already saved. Nothing to do." }
     "FFT" { $message = "The FHD picture was saved and the wallpaper is now updated." }
     "FTF" { $message = "The UHD picture was saved." }
     "FTT" { $message = "The pictures were saved and the wallpaper is now updated." }
     "TFF" { $message = "The LNK file was saved." }
     "TFT" { $message = "The LNK file and FHD picture was saved and wallpaper is now updated." }
     "TTF" { $message = "The LNK file and UHD picture was saved." }
-    "TTT" { $message = "Today's Bing wallpaper was saved and the wallpaer is now updated." }
+    "TTT" { $message = "Today's Bing wallpaper was saved and the wallpaper is now updated." }
 }
 
 # The default execution policy of windows built in 
