@@ -158,29 +158,29 @@ if (Test-Path $LNK_filepath) {
 }
 else {
     # Save the informations in the LNK file.
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Title of the image:"
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].copyright
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "More information of the image:"
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].copyrightlink
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Date of the image(YYYYMMDD):"
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].startdate
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "The base URL of the image:"
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $body.images[0].urlbase
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Download link of the FHD file:"
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $FHD_fileurl
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Download link of the UHD file:"
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value $UHD_fileurl
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Powershell command to download the FHD file:"
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Invoke-WebRequest -Method Get -Uri `"$FHD_fileurl`" -OutFile `"$FHD_filename`""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value ""
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Powershell command to download the UHD file:"
-    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Invoke-WebRequest -Method Get -Uri `"$UHD_fileurl`" -OutFile `"$UHD_filename`""
+    Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Title of the image:
+$body.images[0].copyright
+
+More information of the image:
+$body.images[0].copyrightlink
+
+Date of the image(YYYYMMDD):
+$body.images[0].startdate
+
+The base URL of the image:
+$body.images[0].urlbase
+
+Download link of the FHD file:
+$FHD_fileurl
+
+Download link of the UHD file:
+$UHD_fileurl
+
+Powershell command to download the FHD file:
+Invoke-WebRequest -Method Get -Uri `"$FHD_fileurl`" -OutFile `"$FHD_filename`"
+
+Powershell command to download the UHD file:
+Invoke-WebRequest -Method Get -Uri `"$UHD_fileurl`" -OutFile `"$UHD_filename`""
     $LNK = "T" # Means, the FHD file has been saved.
 }
 
