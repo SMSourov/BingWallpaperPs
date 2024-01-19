@@ -199,7 +199,7 @@ if ($IsWindows) {
     # Go to the setWallpaper directory
     Set-Location .\setWallpaper\windows
 
-    pwsh setWindows.ps1 $FHD_filepath $LNK $UHD $FHD $body.images[0].copyrightlink
+    pwsh setWindows.ps1 $FHD_filepath $LNK $UHD $FHD $body.images[0].copyright $body.images[0].copyrightlink
 
     # Get back to the working directory
     Set-Location ..\..

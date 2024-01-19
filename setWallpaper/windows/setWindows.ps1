@@ -91,7 +91,8 @@ $FHD_filepath = $image_name
 $LNK = $args[1]
 $UHD = $args[2]
 $FHD = $args[3]
-$FHD_info_url = $args[4]
+$FHD_title = $args[4]
+$FHD_info_url = $args[5]
 
 # Incase of the null values, define default values
 if ($null -eq $FHD) {
@@ -132,18 +133,59 @@ if ($FHD -eq "T") {
 # TTT = TODAY'S BING WALLPAPER WAS SAVED AND THE WALLPAPER IS NOW UPDATED
 
 # Variable to print the message
-$message = ""
+# $message = ""
+$attributionMessage = ""
 
 # Using switch statements
 Switch ($LNK + $UHD + $FHD) {
-    "FFF" { $Message = "Everything is already saved. Nothing to do." }
-    "FFT" { $message = "The FHD picture was saved and the wallpaper is now updated." }
-    "FTF" { $message = "The UHD picture was saved." }
-    "FTT" { $message = "The pictures were saved and the wallpaper is now updated." }
-    "TFF" { $message = "The LNK file was saved." }
-    "TFT" { $message = "The LNK file and FHD picture was saved and wallpaper is now updated." }
-    "TTF" { $message = "The LNK file and UHD picture was saved." }
-    "TTT" { $message = "Today's Bing wallpaper was saved and the wallpaper is now updated." }
+    "FFF" {
+        $attributionMessage = 1
+        # $Message = "Everything is already saved. Nothing to do." 
+        $attributionMessage = "Nothing saved."
+        break
+    }
+    "FFT" {
+        $attributionMessage = 2
+        # $message = "The FHD picture was saved and the wallpaper is now updated." 
+        $attributionMessage = "FHD"
+        break
+    }
+    "FTF" {
+        $attributionMessage = 3
+        # $message = "The UHD picture was saved." 
+        $attributionMessage = "UHD"
+        break
+    }
+    "FTT" {
+        $attributionMessage = 4
+        # $message = "The pictures were saved and the wallpaper is now updated." 
+        $attributionMessage = "UHD + FHD"
+        break
+    }
+    "TFF" {
+        $attributionMessage = 5
+        # $message = "The LNK file was saved." 
+        $attributionMessage = "LNK"
+        break
+    }
+    "TFT" {
+        $attributionMessage = 6
+        # $message = "The LNK file and FHD picture was saved and wallpaper is now updated." 
+        $attributionMessage = "LNK + FHD"
+        break
+    }
+    "TTF" {
+        $attributionMessage = 7
+        # $message = "The LNK file and UHD picture was saved." 
+        $attributionMessage = "LNK + UHD"
+        break
+    }
+    "TTT" {
+        $attributionMessage = 8
+        # $message = "Today's Bing wallpaper was saved and the wallpaper is now updated." 
+        $attributionMessage = "Everything saved."
+        break
+    }
 }
 
 # The default execution policy of windows built in 
@@ -151,5 +193,9 @@ Switch ($LNK + $UHD + $FHD) {
 # the execution policy must be bypassed in order 
 # to run the script.
 # powershell -ExecutionPolicy Bypass .\notification.ps1 "$Message"
+$FHD_filepath = $FHD_filepath.ToString().Replace("©", "ReplaceSymbolCopyright").Replace(" ", "ReplaceSymbolSpace").Replace(",", "ReplaceSymbolComma")
+$FHD_title = $FHD_title.ToString().Replace("©", "ReplaceSymbolCopyright").Replace(" ", "ReplaceSymbolSpace").Replace(",", "ReplaceSymbolComma")
+$attributionMessage = $attributionMessage.ToString().Replace(" ", "ReplaceSymbolSpace")
 
-pwsh .\windowsNotification.ps1 $FHD_filepath $message $FHD_info_url
+powershell -ExecutionPolicy Bypass .\windowsNotification.ps1 $FHD_filepath "'$FHD_title'" "'$FHD_info_url'" $attributionMessage
+
