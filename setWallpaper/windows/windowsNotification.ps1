@@ -5,9 +5,10 @@ $infoLink = $args[2]
 $attributionMessage = $args[3]
 
 # Apply bug fixes
-$FHD_filepath = $FHD_filepath.Replace("ReplaceSymbolSpace", " ").Replace("/", "\").Replace("ReplaceSymbolComma", ",")
+$FHD_filepath = $FHD_filepath.Replace("ReplaceSymbolSpace", " ").Replace("/", "\").Replace("ReplaceSymbolComma", ",").Replace("ReplaceSymbolApostrophe", "'")
 # $title = $title.ToString().Replace("ReplaceSymbolCopyright", "©").Replace("ReplaceSymbolSpace", " ").Replace("ReplaceSymbolComma", ",")
-$title = $title.ToString().Replace("ReplaceSymbolCopyright", "(c)").Replace("ReplaceSymbolSpace", " ").Replace("ReplaceSymbolComma", ",")
+$title = $title.ToString().Replace("ReplaceSymbolCopyright", "(c)").Replace("ReplaceSymbolSpace", " ").Replace("ReplaceSymbolComma", ",").Replace("ReplaceSymbolApostrophe", "'")
+# echo $attributionMessage
 $attributionMessage = $attributionMessage.ToString().Replace("ReplaceSymbolSpace", " ")
 
 Write-Output "
@@ -22,14 +23,12 @@ $toastImageNotificationXML = [Windows.UI.Notifications.ToastNotificationManager,
 
 $line1 = "BingWallpaperPs"
 $line2 = $title
-# $line2 = "This is the second line"
 $line3 = $attributionMessage
-# $line3 = "This is an attribuito message"
 $buttonText1 = "More info on the subject"
 
 # Define the image paths
 $imagePath = $FHD_filepath
-# $imagePath = "C:\Users\Sourov\temp\20231212 - Red poinsettias_FHD.jpg"
+
 # echo $PWD
 $iconPath = "$PWD\BingWallpaperPs.png"
 
@@ -73,7 +72,6 @@ $image = $toastImageNotificationXML.CreateElement('image')
 $image.SetAttribute('id', '2')
 $image.SetAttribute('src', $imagePath)
 $toastImageNotificationXML.SelectSingleNode('//binding').AppendChild($image) | Out-Null
-
 
 
 # Create the actions element in the toast element tag

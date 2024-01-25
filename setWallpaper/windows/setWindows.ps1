@@ -193,8 +193,8 @@ Switch ($LNK + $UHD + $FHD) {
 # the execution policy must be bypassed in order 
 # to run the script.
 # powershell -ExecutionPolicy Bypass .\notification.ps1 "$Message"
-$FHD_filepath = $FHD_filepath.ToString().Replace("©", "ReplaceSymbolCopyright").Replace(" ", "ReplaceSymbolSpace").Replace(",", "ReplaceSymbolComma")
-$FHD_title = $FHD_title.ToString().Replace("©", "ReplaceSymbolCopyright").Replace(" ", "ReplaceSymbolSpace").Replace(",", "ReplaceSymbolComma")
+$FHD_filepath = $FHD_filepath.ToString().Replace("©", "ReplaceSymbolCopyright").Replace(" ", "ReplaceSymbolSpace").Replace(",", "ReplaceSymbolComma").Replace("'", "ReplaceSymbolApostrophe")
+$FHD_title = $FHD_title.ToString().Replace("©", "ReplaceSymbolCopyright").Replace(" ", "ReplaceSymbolSpace").Replace(",", "ReplaceSymbolComma").Replace("'", "ReplaceSymbolApostrophe")
 $attributionMessage = $attributionMessage.ToString().Replace(" ", "ReplaceSymbolSpace")
 
 powershell -ExecutionPolicy Bypass .\windowsNotification.ps1 $FHD_filepath "'$FHD_title'" "'$FHD_info_url'" $attributionMessage
