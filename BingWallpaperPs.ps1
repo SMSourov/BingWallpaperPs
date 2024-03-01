@@ -185,23 +185,24 @@ Invoke-WebRequest -Method Get -Uri `"$UHD_fileurl`" -OutFile `"$UHD_filename`"
     $LNK = "T" # Means, the FHD file has been saved.
 }
 
-# Set the picture as desktop background image.
-if ($IsLinux) {
-    # Go to the linux directory
-    Set-Location .\setWallpaper\linux
+# Now, apply the wallpaper
+# Go to the setWallpaper directory
+Set-Location .\setWallpaper
 
-    pwsh neofetch.ps1 $FHD_filepath $FHD $UHD $LNK
+# Run the command
+pwsh .\chooseOS.ps1 $LNK $UHD $FHD $FHD_filepath $body.images[0].copyright $body.images[0].copyrightlink
 
-    # Get back to the working directory
-    Set-Location ..\..
-}
+# Return to the current working directory
+Set-location ..
+# Return to the previous working directory.
 
-if ($IsWindows) {
-    # Go to the setWallpaper directory
-    Set-Location .\setWallpaper\windows
+# # Set the picture as desktop background image.
+# if ($IsLinux) {
+#     # Go to the linux directory
+#     Set-Location .\setWallpaper\linux
 
-    pwsh setWindows.ps1 $FHD_filepath $LNK $UHD $FHD $body.images[0].copyright $body.images[0].copyrightlink
+#     pwsh neofetch.ps1 $FHD_filepath $FHD $UHD $LNK $FHD_filepath
 
-    # Get back to the working directory
-    Set-Location ..\..
-}
+#     # Get back to the working directory
+#     Set-Location ..\..
+# }

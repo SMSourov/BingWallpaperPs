@@ -80,18 +80,15 @@ Function Set-WallPaper {
     Write-Output $ret # To remove the warning shown in the vs code for $ret
 }
 
-# Get the current locations.
-# $curDir = Get-Location
-
-# Write-Output $curDir
-$image_name = $args[0]
-
-# $FHD_filepath = "$curDir\$image_name"
-$FHD_filepath = $image_name
-$LNK = $args[1]
-$UHD = $args[2]
-$FHD = $args[3]
+# Capture the flags
+$LNK = $args[0]
+$UHD = $args[1]
+$FHD = $args[2]
+# Capture the FHD filepath
+$FHD_filepath = $args[3]
+# Capture the FHD title 
 $FHD_title = $args[4]
+# Capture the FHD info url
 $FHD_info_url = $args[5]
 
 # Incase of the null values, define default values
