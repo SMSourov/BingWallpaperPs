@@ -197,5 +197,10 @@ $FHD_filepath = $FHD_filepath.ToString().Replace("©", "ReplaceSymbolCopyright")
 $FHD_title = $FHD_title.ToString().Replace("©", "ReplaceSymbolCopyright").Replace(" ", "ReplaceSymbolSpace").Replace(",", "ReplaceSymbolComma").Replace("'", "ReplaceSymbolApostrophe")
 $attributionMessage = $attributionMessage.ToString().Replace(" ", "ReplaceSymbolSpace")
 
+# Write-Output "FHD_filepath = $FHD_filepath"
+# Write-Output "FHD_title = $FHD_title"
+# Write-Output "FHD_info_url= $FHD_info_url"
+# Write-Output "attributionMessage = $attributionMessage"
+
 powershell -ExecutionPolicy Bypass .\windowsNotification.ps1 $FHD_filepath "'$FHD_title'" "'$FHD_info_url'" $attributionMessage
 
