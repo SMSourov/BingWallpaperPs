@@ -159,28 +159,29 @@ if (Test-Path $LNK_filepath) {
 else {
     # Save the informations in the LNK file.
     Add-Content -Path $LNK_filepath -Encoding utf8 -Value "Title of the image:
-$body.images[0].copyright
+$($body.images[0].copyright)
 
 More information of the image:
-$body.images[0].copyrightlink
+$($body.images[0].copyrightlink)
 
 Date of the image(YYYYMMDD):
-$body.images[0].startdate
+$($body.images[0].startdate)
 
 The base URL of the image:
-$body.images[0].urlbase
+$($body.images[0].urlbase)
 
 Download link of the FHD file:
-$FHD_fileurl
+$($FHD_fileurl)
 
 Download link of the UHD file:
-$UHD_fileurl
+$($UHD_fileurl)
 
 Powershell command to download the FHD file:
 Invoke-WebRequest -Method Get -Uri `"$FHD_fileurl`" -OutFile `"$FHD_filename`"
 
 Powershell command to download the UHD file:
-Invoke-WebRequest -Method Get -Uri `"$UHD_fileurl`" -OutFile `"$UHD_filename`""
+Invoke-WebRequest -Method Get -Uri `"$UHD_fileurl`" -OutFile `"$UHD_filename`"
+"
     $LNK = "T" # Means, the FHD file has been saved.
 }
 
