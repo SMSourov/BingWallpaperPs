@@ -18,6 +18,17 @@ if ($IsWindows) {
     # Run the command
     pwsh setWindows.ps1 $LNK $UHD $FHD $FHD_filepath $FHD_title $FHD_info_url
 
-    # Return to the current 
+    # Return to the current directory
+    Set-Location ..
+}
+
+if ($IsLinux) {
+    # Get inside the linux directory
+    Set-Location linux
+
+    # Run the command
+    pwsh neofetch.ps1 
+
+    # Return to the current directory
     Set-Location ..
 }

@@ -1,8 +1,7 @@
 # gsettings set org.gnome.desktop.background picture-uri $FHD_filepath
-$image_name = $args[0]
 
 # $FHD_filepath = "$curDir\$image_name"
-$FHD_filepath = $image_name
+$FHD_filepath = $args[0]
 $LNK = $args[1]
 $UHD = $args[2]
 $FHD = $args[3]
@@ -11,23 +10,26 @@ $FHD = $args[3]
 $theme = gsettings get org.gnome.desktop.interface color-scheme
 $isDark = ""
 
-if ($theme -eq "`'prefer-light`'") {
-    Write-Output "The current theme is light theme"
-    $isDark = "F"
-}
-elseif ($theme -eq "`'prefer-dark`'") {
-    Write-Output "The current theme is dark theme"
-    $isDark = "T"
-}
+# if ($theme -eq "`'prefer-light`'") {
+#     Write-Output "The current theme is light theme"
+#     $isDark = "F"
+# }
+# elseif ($theme -eq "`'prefer-dark`'") {
+#     Write-Output "The current theme is dark theme"
+#     $isDark = "T"
+# }
 
-# Apply the wallpaper on the appropriate theme
-if ($isDark -eq "F") {
-    gsettings set org.gnome.desktop.background picture-uri $FHD_filepath
-}
-elseif ($isDark -eq "T") {
-    Write-Output "The FHD file is: $FHD_filepath"
-    gsettings set org.gnome.desktop.background picture-uri-dark $FHD_filepath
-}
+# # Apply the wallpaper on the appropriate theme
+# if ($isDark -eq "F") {
+#     gsettings set org.gnome.desktop.background picture-uri $FHD_filepath
+# }
+# elseif ($isDark -eq "T") {
+#     Write-Output "The FHD file is: $FHD_filepath"
+#     gsettings set org.gnome.desktop.background picture-uri-dark $FHD_filepath
+# }
+
+gsettings set org.gnome.desktop.background picture-uri "$PWD/$FHD_filepath"
+gsettings set org.gnome.desktop.background picture-uri-dark "$PWD/$FHD_filepath"
 
 # Incase of the null values, define default values
 if ($null -eq $FHD) {
@@ -70,4 +72,6 @@ Switch ($LNK + $UHD + $FHD) {
 }
 
 # Show the notification
-python3 notification.py "BingWallpaperPs" $Message
+# python3 notification.py "BingWallpaperPs" $Message
+Write-Output "$PWD"
+& ../notify-call -u normal -a "BingWallpaperPs" -i "$PWD/../BingWallpaperPs.png" -p "BingWallpaperPs" "$Message"

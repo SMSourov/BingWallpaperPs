@@ -1,12 +1,13 @@
-# Capture the arguements
-# Write-Output $curDir
-$image_name = $args[0]
-
-# $FHD_filepath = "$curDir\$image_name"
-$FHD_filepath = $image_name
-$LNK = $args[1]
-$UHD = $args[2]
-$FHD = $args[3]
+# Capture the flags
+$LNK = $args[0]
+$UHD = $args[1]
+$FHD = $args[2]
+# Capture the FHD filepath
+$FHD_filepath = $args[3]
+# Capture the FHD title 
+$FHD_title = $args[4]
+# Capture the FHD info url
+$FHD_info_url = $args[5]
 
 # Only the given desktop environments will be supported.
 # The commands given below are taken from 
@@ -18,7 +19,7 @@ $FHD = $args[3]
 # Make a function to get the minimal output
 # of neofetch.
 function neofetchMinimal {
-    neofetch --disable memory gpu cpu wm theme shell resolution icons packages uptime kernel --os_arch off --de_version off --stdout
+    & ./neofetch.sh --disable memory gpu cpu wm theme shell resolution icons packages uptime kernel --os_arch off --de_version off --stdout
     # In this command, Memory, GPU, CPU, WM,
     # Theme, Shell, Resolution, Icons, Packages, 
     # Uptime, Kernel, OS architecture, Desktop 
@@ -44,7 +45,8 @@ $desktop_environment_info = $information[4]
 # make thing easy. Firstly, you have to save 
 # the value to a string type variable and 
 # trim the first 4 characters.
-$desktop_environment = $desktop_environment_info.ToString().Substring(4)
+# $desktop_environment = $desktop_environment_info.ToString().Substring(4)
+$desktop_environment = $desktop_environment_info.ToString().Replace("DE: ", "")
 
 # Trim the whitespaces from the variable
 $desktop_environment = $desktop_environment.Trim()
@@ -53,6 +55,10 @@ $desktop_environment = $desktop_environment.Trim()
 # This will make the conditions easier to 
 # implement.
 $desktop_environment = $desktop_environment.ToLower()
+
+# Remove " (wayland)" if exist.
+$desktop_environment = $desktop_environment.ToString().Replace(" (wayland)", "")
+Write-Output "de is $desktop_environment"
 
 if ($desktop_environment -eq "gnome") {
     Write-Output "It has detected GNOME desktop environment."
