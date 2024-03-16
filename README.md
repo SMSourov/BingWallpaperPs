@@ -39,6 +39,7 @@ pwsh BingWallpaperPs.ps1
 For Linux OS, the following desktop environments are supported.
 
 - GNOME (Tested on Ubuntu 22.04.)
+<s>
 - KDE Plasma (Tested on Kubuntu 22.04.)
 - Unity (Tested on Ubuntu Unity 22.10.)
 - Budgie (Tested on Ubuntu Budgie 22.04.)
@@ -47,6 +48,7 @@ For Linux OS, the following desktop environments are supported.
 - Deepin (Tested on AcroLinux 22.11.02 having Deepin 20.6 environment. I don't know why but it is not working in Deepin 20.8.)
 - LXDE (Tested on Fedora LXDE 36.)
 - LXQt (Tested on Lubuntu 22.04.)
+</s>
 
 However, the notification system was not checked for all desktop environments. I'll check that in the future, probably in 2024.
 
