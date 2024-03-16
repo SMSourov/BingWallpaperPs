@@ -5,11 +5,15 @@ Download Bing wallpaper via PowerShell.
 As this is a PowerShell file, PowerShell v7 or higher has to be installed in order to run this script file.
 In the case of Linux OS, I would highly recommend you to avoid the snap version and use the github release versions. More over after installing Powershell, you have to set the capabilities of powershell by running this command,
 
-`sudo setcap cap_net_raw=eip /$location_of_pwsh/pwsh`
+```
+sudo setcap cap_net_raw=eip /$location_of_pwsh/pwsh
+```
 
 For example: If you install Powershell v7.x.y (deb/rpm), the command would be,
 
-`sudo setcap cap_net_raw=eip /opt/microsoft/powershell/7/pwsh`
+```
+sudo setcap cap_net_raw=eip /opt/microsoft/powershell/7/pwsh
+```
 
 Do not use the snap version. I couldn't find any way to solve this problem.
 
@@ -30,7 +34,9 @@ Dependencies:
 
 On Windows and on Linux, the command would be
 
-`pwsh BingWallpaperPs.ps1`
+```
+pwsh BingWallpaperPs.ps1
+```
 
 For Linux OS, the following desktop environments are supported.
 
