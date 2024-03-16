@@ -1,19 +1,19 @@
-# Capture the flags
+# Capture the flags.
 $LNK = $args[0]
 $UHD = $args[1]
 $FHD = $args[2]
-# Capture the FHD filepath
+# Capture the FHD filepath.
 $FHD_filepath = $args[3]
-# Capture the FHD title 
+# Capture the FHD title.
 $FHD_title = $args[4]
-# Capture the FHD info url
+# Capture the FHD info url.
 $FHD_info_url = $args[5]
 
 # Only the given desktop environments will be supported.
 # The commands given below are taken from 
 # https://github.com/pgc062020/DailyDesktopWallpaperPlus/blob/master/setwallpaper.cpp
 
-# Detect the desktop environment that the 
+# Detect the desktop environment that the
 # user have in it's OS.
 
 # Make a function to get the minimal output
@@ -58,7 +58,7 @@ $desktop_environment = $desktop_environment.ToLower()
 
 # Remove " (wayland)" if exist.
 $desktop_environment = $desktop_environment.ToString().Replace(" (wayland)", "")
-Write-Output "de is $desktop_environment"
+# Write-Output "de is $desktop_environment"
 
 if ($desktop_environment -eq "gnome") {
     Write-Output "It has detected GNOME desktop environment."
@@ -68,13 +68,13 @@ if ($desktop_environment -eq "gnome") {
     # Go to the GNOME directory
     Set-Location gnome
 
-    pwsh setGnome.ps1 $FHD_filepath $LNK $UHD $FHD
+    pwsh setGnome.ps1 $LNK $UHD $FHD $FHD_filepath $FHD_title $FHD_info_url
 
     # Get back to the working directory
     Set-Location ..
 
     # Not sure why but at the time of testing this on, 
-    # Visual Studio Code flatpak, it kept detecting 
+    # Visual Studio Code, it kept detecting 
     # the desktop environment as Unity Desktop 
     # Environment. But when this was run from GNOME 
     # Terminal(not flatpak or snap), it detected the 

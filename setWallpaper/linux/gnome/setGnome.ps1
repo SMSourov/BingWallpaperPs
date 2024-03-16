@@ -1,14 +1,19 @@
 # gsettings set org.gnome.desktop.background picture-uri $FHD_filepath
 
-# $FHD_filepath = "$curDir\$image_name"
-$FHD_filepath = $args[0]
-$LNK = $args[1]
-$UHD = $args[2]
-$FHD = $args[3]
+# Capture the flags.
+$LNK = $args[0]
+$UHD = $args[1]
+$FHD = $args[2]
+# Capture the FHD filepath.
+$FHD_filepath = $args[3]
+# Capture the FHD title.
+$FHD_title = $args[4]
+# Capture the FHD info url.
+$FHD_info_url = $args[5]
 
-# Get the current gnome theme
-$theme = gsettings get org.gnome.desktop.interface color-scheme
-$isDark = ""
+# # Get the current gnome theme
+# $theme = gsettings get org.gnome.desktop.interface color-scheme
+# $isDark = ""
 
 # if ($theme -eq "`'prefer-light`'") {
 #     Write-Output "The current theme is light theme"
@@ -27,9 +32,9 @@ $isDark = ""
 #     Write-Output "The FHD file is: $FHD_filepath"
 #     gsettings set org.gnome.desktop.background picture-uri-dark $FHD_filepath
 # }
-
-gsettings set org.gnome.desktop.background picture-uri "$PWD/$FHD_filepath"
-gsettings set org.gnome.desktop.background picture-uri-dark "$PWD/$FHD_filepath"
+# Write-Output "file path: $FHD_filepath"
+gsettings set org.gnome.desktop.background picture-uri "$FHD_filepath"
+gsettings set org.gnome.desktop.background picture-uri-dark "$FHD_filepath"
 
 # Incase of the null values, define default values
 if ($null -eq $FHD) {
@@ -73,5 +78,5 @@ Switch ($LNK + $UHD + $FHD) {
 
 # Show the notification
 # python3 notification.py "BingWallpaperPs" $Message
-Write-Output "$PWD"
+
 & ../notify-call -u normal -a "BingWallpaperPs" -i "$PWD/../BingWallpaperPs.png" -p "BingWallpaperPs" "$Message"
